@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "环保报告",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "eco-chart": "../../components/eco-chart/eco-chart"
+  }
+}

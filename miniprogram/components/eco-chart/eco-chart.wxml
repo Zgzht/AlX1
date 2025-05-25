@@ -1,0 +1,26 @@
+<!--components/eco-chart/eco-chart.wxml-->
+<view class="chart-container">
+  <canvas 
+    canvas-id="ecoChart" 
+    class="chart-canvas"
+    style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+    bindtouchstart="onTouchStart"
+    bindtouchmove="onTouchMove"
+    bindtouchend="onTouchEnd"
+  ></canvas>
+  
+  <!-- 图表说明 -->
+  <view class="chart-legend" wx:if="{{showLegend}}">
+    <view class="legend-item" wx:for="{{legendData}}" wx:key="label">
+      <view class="legend-color" style="background-color: {{item.color}};"></view>
+      <text class="legend-label">{{item.label}}</text>
+      <text class="legend-value">{{item.value}}</text>
+    </view>
+  </view>
+  
+  <!-- 空状态 -->
+  <view class="empty-chart" wx:if="{{!data || data.length === 0}}">
+    <image class="empty-icon" src="/images/empty-chart.png"></image>
+    <text class="empty-text">暂无数据</text>
+  </view>
+</view>

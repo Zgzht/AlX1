@@ -1,0 +1,124 @@
+<!--pages/profile/profile.wxml-->
+<view class="profile-container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-avatar">
+      <image class="avatar-image" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="level-badge">Lv.{{userInfo.level}}</view>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{userInfo.nickName || '环保用户'}}</text>
+      <text class="user-title">{{userInfo.levelName}}</text>
+      <view class="user-stats">
+        <view class="stat-item">
+          <text class="stat-value">{{userInfo.score}}</text>
+          <text class="stat-label">积分</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{userInfo.totalActions}}</text>
+          <text class="stat-label">环保行为</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{userInfo.currentStreak}}</text>
+          <text class="stat-label">连续天数</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 成就展示 -->
+  <view class="achievements-section">
+    <view class="section-header">
+      <text class="section-title">我的成就</text>
+      <text class="section-count">{{achievements.length}}/{{totalAchievements}}</text>
+    </view>
+    <scroll-view class="achievements-scroll" scroll-x="true">
+      <view class="achievement-item" wx:for="{{achievements}}" wx:key="achievementId">
+        <image class="achievement-icon" src="/images/achievement-{{item.achievementId}}.png"></image>
+        <text class="achievement-title">{{item.title}}</text>
+      </view>
+      <view class="achievement-item locked" wx:for="{{lockedAchievements}}" wx:key="id">
+        <image class="achievement-icon" src="/images/achievement-locked.png"></image>
+        <text class="achievement-title">{{item.title}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goToHistory">
+      <view class="menu-icon">
+        <image src="/images/history.png"></image>
+      </view>
+      <text class="menu-title">环保历史</text>
+      <text class="menu-arrow">></text>
+    </view>
+    
+    <view class="menu-item" bindtap="goToRewards">
+      <view class="menu-icon">
+        <image src="/images/rewards.png"></image>
+      </view>
+      <text class="menu-title">积分商城</text>
+      <text class="menu-arrow">></text>
+    </view>
+    
+    <view class="menu-item" bindtap="goToSettings">
+      <view class="menu-icon">
+        <image src="/images/settings.png"></image>
+      </view>
+      <text class="menu-title">设置</text>
+      <text class="menu-arrow">></text>
+    </view>
+    
+    <view class="menu-item" bindtap="shareProfile">
+      <view class="menu-icon">
+        <image src="/images/share.png"></image>
+      </view>
+      <text class="menu-title">分享成就</text>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 环保数据统计 -->
+  <view class="stats-section">
+    <view class="section-header">
+      <text class="section-title">环保数据</text>
+    </view>
+    <view class="stats-grid">
+      <view class="stats-card">
+        <text class="stats-value">{{monthlyActions}}</text>
+        <text class="stats-label">本月行为</text>
+      </view>
+      <view class="stats-card">
+        <text class="stats-value">{{weeklyScore}}</text>
+        <text class="stats-label">本周积分</text>
+      </view>
+      <view class="stats-card">
+        <text class="stats-value">{{maxStreak}}</text>
+        <text class="stats-label">最长连续</text>
+      </view>
+      <view class="stats-card">
+        <text class="stats-value">{{ranking}}</text>
+        <text class="stats-label">排名</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近活动 -->
+  <view class="recent-section">
+    <view class="section-header">
+      <text class="section-title">最近活动</text>
+      <text class="section-more" bindtap="goToHistory">查看更多</text>
+    </view>
+    <view class="recent-list">
+      <view class="recent-item" wx:for="{{recentActions}}" wx:key="id">
+        <image class="recent-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+        <view class="recent-info">
+          <text class="recent-name">{{item.name}}</text>
+          <text class="recent-time">{{item.timeText}}</text>
+        </view>
+        <text class="recent-score">+{{item.score}}</text>
+      </view>
+    </view>
+  </view>
+</view>

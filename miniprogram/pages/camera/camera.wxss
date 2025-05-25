@@ -1,0 +1,489 @@
+/* camera.wxss */
+.container {
+  height: 100vh;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 相机容器 */
+.camera-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.camera {
+  width: 100%;
+  height: 100%;
+}
+
+/* 相机控制层 */
+.camera-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.camera-controls > * {
+  pointer-events: auto;
+}
+
+/* 顶部控制 */
+.top-controls {
+  position: absolute;
+  top: 88rpx;
+  left: 32rpx;
+  right: 32rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.control-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10rpx);
+}
+
+.control-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* 底部控制 */
+.bottom-controls {
+  position: absolute;
+  bottom: 120rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 80rpx;
+}
+
+.gallery-btn,
+.tips-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10rpx);
+}
+
+.gallery-icon,
+.tips-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* 拍照按钮 */
+.capture-btn {
+  width: 120rpx;
+  height: 120rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10rpx);
+  transition: all 0.2s ease;
+}
+
+.capture-btn:active {
+  transform: scale(0.9);
+}
+
+.capture-btn.capturing {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.capture-inner {
+  width: 80rpx;
+  height: 80rpx;
+  background: white;
+  border-radius: 40rpx;
+}
+
+/* 拍照提示 */
+.photo-tips {
+  position: absolute;
+  bottom: 280rpx;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+}
+
+.tips-text {
+  font-size: 32rpx;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.tips-subtitle {
+  font-size: 24rpx;
+  opacity: 0.8;
+  display: block;
+}
+
+/* 结果容器 */
+.result-container {
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 图片预览 */
+.image-preview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.preview-image {
+  flex: 1;
+  width: 100%;
+}
+
+.image-actions {
+  padding: 32rpx;
+  display: flex;
+  gap: 24rpx;
+}
+
+.image-actions button {
+  flex: 1;
+  height: 88rpx;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+}
+
+/* 识别结果 */
+.recognition-result {
+  background: white;
+  margin: 32rpx;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.result-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 16rpx;
+}
+
+.result-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 环保行为信息 */
+.eco-action-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32rpx;
+  padding: 24rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.action-type {
+  display: flex;
+  align-items: center;
+}
+
+.type-icon {
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 16rpx;
+}
+
+.type-name {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.action-score {
+  text-align: center;
+}
+
+.score-label {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.score-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+/* 行为描述 */
+.action-description {
+  margin-bottom: 32rpx;
+}
+
+.description-text {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 置信度信息 */
+.confidence-info {
+  margin-bottom: 32rpx;
+}
+
+.confidence-label {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.confidence-bar {
+  height: 8rpx;
+  background: #e0e0e0;
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin-bottom: 8rpx;
+}
+
+.confidence-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%);
+  transition: width 0.3s ease;
+}
+
+.confidence-value {
+  font-size: 24rpx;
+  color: #4CAF50;
+  font-weight: 500;
+}
+
+/* 结果操作 */
+.result-actions {
+  display: flex;
+  gap: 24rpx;
+}
+
+.result-actions button {
+  flex: 1;
+  height: 88rpx;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+}
+
+/* 历史记录 */
+.history-section {
+  position: absolute;
+  bottom: 400rpx;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+
+.section-title {
+  color: white;
+  font-size: 28rpx;
+  margin: 0 32rpx 16rpx;
+  font-weight: 500;
+}
+
+.history-list {
+  white-space: nowrap;
+  padding: 0 32rpx;
+}
+
+.history-item {
+  display: inline-block;
+  width: 160rpx;
+  margin-right: 24rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12rpx;
+  overflow: hidden;
+  backdrop-filter: blur(10rpx);
+}
+
+.history-image {
+  width: 100%;
+  height: 120rpx;
+}
+
+.history-info {
+  padding: 16rpx;
+  text-align: center;
+}
+
+.history-name {
+  font-size: 24rpx;
+  color: white;
+  display: block;
+  margin-bottom: 4rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-score {
+  font-size: 20rpx;
+  color: #4CAF50;
+  font-weight: 500;
+}
+
+/* 技巧弹窗 */
+.tips-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64rpx;
+}
+
+.tips-content {
+  background: white;
+  border-radius: 16rpx;
+  width: 100%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.tips-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx 32rpx 0;
+  border-bottom: 1rpx solid #e0e0e0;
+  margin-bottom: 32rpx;
+}
+
+.tips-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.close-btn {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.tips-list {
+  padding: 0 32rpx 32rpx;
+}
+
+.tip-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.tip-item:last-child {
+  margin-bottom: 0;
+}
+
+.tip-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 24rpx;
+}
+
+.tip-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 动画效果 */
+.scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 加载状态 */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.loading-content {
+  background: white;
+  padding: 48rpx;
+  border-radius: 16rpx;
+  text-align: center;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #333;
+  margin-top: 16rpx;
+}

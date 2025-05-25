@@ -1,0 +1,144 @@
+<!--pages/ranking/ranking.wxml-->
+<view class="ranking-container">
+  <!-- 排行榜类型切换 -->
+  <view class="ranking-tabs">
+    <view 
+      class="tab-item {{currentTab === 'score' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="score"
+    >
+      积分榜
+    </view>
+    <view 
+      class="tab-item {{currentTab === 'actions' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="actions"
+    >
+      行为榜
+    </view>
+    <view 
+      class="tab-item {{currentTab === 'streak' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="streak"
+    >
+      连续榜
+    </view>
+  </view>
+
+  <!-- 时间周期切换 -->
+  <view class="period-tabs">
+    <view 
+      class="period-item {{currentPeriod === 'all' ? 'active' : ''}}"
+      bindtap="switchPeriod"
+      data-period="all"
+    >
+      总榜
+    </view>
+    <view 
+      class="period-item {{currentPeriod === 'month' ? 'active' : ''}}"
+      bindtap="switchPeriod"
+      data-period="month"
+    >
+      月榜
+    </view>
+    <view 
+      class="period-item {{currentPeriod === 'week' ? 'active' : ''}}"
+      bindtap="switchPeriod"
+      data-period="week"
+    >
+      周榜
+    </view>
+  </view>
+
+  <!-- 我的排名 -->
+  <view class="my-ranking" wx:if="{{userRanking}}">
+    <view class="my-rank-header">
+      <text class="my-rank-title">我的排名</text>
+    </view>
+    <view class="my-rank-card">
+      <view class="rank-number">
+        <text class="rank-text">第{{userRanking.rank}}名</text>
+        <text class="rank-total">共{{userRanking.total}}人</text>
+      </view>
+      <view class="rank-user">
+        <image class="rank-avatar" src="{{userRanking.user.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="rank-info">
+          <text class="rank-name">{{userRanking.user.nickName}}</text>
+          <text class="rank-level">Lv.{{userRanking.user.level}}</text>
+        </view>
+      </view>
+      <view class="rank-value">
+        <text class="value-number">{{userRanking.user.value}}</text>
+        <text class="value-unit">{{getValueUnit(currentTab)}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 排行榜列表 -->
+  <view class="ranking-list">
+    <view class="list-header">
+      <text class="list-title">排行榜</text>
+      <text class="list-count">前{{rankingData.length}}名</text>
+    </view>
+    
+    <!-- 前三名特殊显示 -->
+    <view class="top-three" wx:if="{{rankingData.length >= 3}}">
+      <!-- 第二名 -->
+      <view class="top-item second" wx:if="{{rankingData[1]}}">
+        <view class="top-rank">2</view>
+        <image class="top-avatar" src="{{rankingData[1].avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <text class="top-name">{{rankingData[1].nickName}}</text>
+        <text class="top-value">{{rankingData[1].value}}</text>
+      </view>
+      
+      <!-- 第一名 -->
+      <view class="top-item first" wx:if="{{rankingData[0]}}">
+        <view class="top-rank crown">1</view>
+        <image class="top-avatar" src="{{rankingData[0].avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <text class="top-name">{{rankingData[0].nickName}}</text>
+        <text class="top-value">{{rankingData[0].value}}</text>
+      </view>
+      
+      <!-- 第三名 -->
+      <view class="top-item third" wx:if="{{rankingData[2]}}">
+        <view class="top-rank">3</view>
+        <image class="top-avatar" src="{{rankingData[2].avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <text class="top-name">{{rankingData[2].nickName}}</text>
+        <text class="top-value">{{rankingData[2].value}}</text>
+      </view>
+    </view>
+
+    <!-- 其他排名 -->
+    <view class="ranking-items">
+      <view 
+        class="ranking-item" 
+        wx:for="{{rankingData}}" 
+        wx:key="userId"
+        wx:if="{{index >= 3}}"
+      >
+        <view class="item-rank">{{item.rank}}</view>
+        <image class="item-avatar" src="{{item.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="item-info">
+          <text class="item-name">{{item.nickName}}</text>
+          <text class="item-level">Lv.{{item.level}}</text>
+        </view>
+        <view class="item-value">
+          <text class="value-number">{{item.value}}</text>
+          <text class="value-unit">{{getValueUnit(currentTab)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-ranking" wx:if="{{!loading && rankingData.length === 0}}">
+    <image class="empty-icon" src="/images/empty-ranking.png"></image>
+    <text class="empty-text">暂无排行数据</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+</view>

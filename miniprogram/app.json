@@ -1,0 +1,69 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/camera/camera",
+    "pages/profile/profile",
+    "pages/ranking/ranking",
+    "pages/report/report",
+    "pages/tasks/tasks"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#4CAF50",
+    "navigationBarTitleText": "环保助手",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#4CAF50",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/camera/camera",
+        "text": "拍照识别",
+        "iconPath": "images/camera.png",
+        "selectedIconPath": "images/camera-active.png"
+      },
+      {
+        "pagePath": "pages/tasks/tasks",
+        "text": "任务",
+        "iconPath": "images/task.png",
+        "selectedIconPath": "images/task-active.png"
+      },
+      {
+        "pagePath": "pages/ranking/ranking",
+        "text": "排行榜",
+        "iconPath": "images/ranking.png",
+        "selectedIconPath": "images/ranking-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile-active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于记录环保行为地点"
+    },
+    "scope.camera": {
+      "desc": "需要使用相机拍照识别环保行为"
+    }
+  },
+  "requiredBackgroundModes": ["location"],
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

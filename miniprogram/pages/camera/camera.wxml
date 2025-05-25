@@ -1,0 +1,146 @@
+<!--camera.wxml-->
+<view class="container">
+  <!-- 相机预览 -->
+  <view class="camera-container" wx:if="{{!showResult}}">
+    <camera 
+      device-position="{{devicePosition}}" 
+      flash="{{flash}}" 
+      binderror="error"
+      class="camera"
+      frame-size="medium"
+    ></camera>
+    
+    <!-- 相机控制层 -->
+    <view class="camera-controls">
+      <!-- 顶部控制 -->
+      <view class="top-controls">
+        <view class="control-btn" bindtap="toggleFlash">
+          <image class="control-icon" src="/images/flash-{{flash}}.png"></image>
+        </view>
+        <view class="control-btn" bindtap="switchCamera">
+          <image class="control-icon" src="/images/switch-camera.png"></image>
+        </view>
+      </view>
+      
+      <!-- 底部控制 -->
+      <view class="bottom-controls">
+        <view class="gallery-btn" bindtap="chooseFromGallery">
+          <image class="gallery-icon" src="/images/gallery.png"></image>
+        </view>
+        
+        <view class="capture-btn {{capturing ? 'capturing' : ''}}" bindtap="takePhoto">
+          <view class="capture-inner"></view>
+        </view>
+        
+        <view class="tips-btn" bindtap="showTips">
+          <image class="tips-icon" src="/images/tips.png"></image>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 拍照提示 -->
+    <view class="photo-tips">
+      <text class="tips-text">对准环保行为拍照识别</text>
+      <text class="tips-subtitle">支持垃圾分类、节能减排等行为识别</text>
+    </view>
+  </view>
+
+  <!-- 图片预览和识别结果 -->
+  <view class="result-container" wx:if="{{showResult}}">
+    <!-- 图片预览 -->
+    <view class="image-preview">
+      <image class="preview-image" src="{{currentImage}}" mode="aspectFit"></image>
+      <view class="image-actions">
+        <button class="btn-secondary" bindtap="retakePhoto">重新拍照</button>
+        <button class="btn-primary" bindtap="recognizeImage" loading="{{recognizing}}">
+          {{recognizing ? '识别中...' : '开始识别'}}
+        </button>
+      </view>
+    </view>
+
+    <!-- 识别结果 -->
+    <view class="recognition-result" wx:if="{{recognitionResult}}">
+      <view class="result-header">
+        <image class="result-icon" src="/images/{{recognitionResult.success ? 'success' : 'error'}}.png"></image>
+        <text class="result-title">{{recognitionResult.success ? '识别成功' : '识别失败'}}</text>
+      </view>
+      
+      <view class="result-content" wx:if="{{recognitionResult.success}}">
+        <view class="eco-action-info">
+          <view class="action-type">
+            <image class="type-icon" src="/images/eco-{{recognitionResult.data.type}}.png"></image>
+            <text class="type-name">{{recognitionResult.data.name}}</text>
+          </view>
+          <view class="action-score">
+            <text class="score-label">获得积分</text>
+            <text class="score-value">+{{recognitionResult.data.score}}</text>
+          </view>
+        </view>
+        
+        <view class="action-description">
+          <text class="description-text">{{recognitionResult.data.description}}</text>
+        </view>
+        
+        <view class="confidence-info">
+          <text class="confidence-label">识别置信度</text>
+          <view class="confidence-bar">
+            <view class="confidence-fill" style="width: {{recognitionResult.data.confidence * 100}}%"></view>
+          </view>
+          <text class="confidence-value">{{Math.floor(recognitionResult.data.confidence * 100)}}%</text>
+        </view>
+      </view>
+      
+      <view class="result-actions">
+        <button class="btn-secondary" bindtap="retakePhoto" wx:if="{{!recognitionResult.success}}">重新拍照</button>
+        <button class="btn-primary" bindtap="submitAction" wx:if="{{recognitionResult.success && !submitted}}">
+          确认提交
+        </button>
+        <button class="btn-primary" bindtap="continuePhoto" wx:if="{{submitted}}">
+          继续拍照
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 历史记录 -->
+  <view class="history-section" wx:if="{{!showResult && recentActions.length > 0}}">
+    <view class="section-title">最近识别</view>
+    <scroll-view class="history-list" scroll-x="true">
+      <view class="history-item" wx:for="{{recentActions}}" wx:key="id" bindtap="viewActionDetail" data-action="{{item}}">
+        <image class="history-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+        <view class="history-info">
+          <text class="history-name">{{item.name}}</text>
+          <text class="history-score">+{{item.score}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 拍照技巧弹窗 -->
+  <view class="tips-modal" wx:if="{{showTipsModal}}" bindtap="hideTips">
+    <view class="tips-content" catchtap="">
+      <view class="tips-header">
+        <text class="tips-title">拍照识别技巧</text>
+        <image class="close-btn" src="/images/close.png" bindtap="hideTips"></image>
+      </view>
+      <view class="tips-list">
+        <view class="tip-item">
+          <image class="tip-icon" src="/images/tip-light.png"></image>
+          <text class="tip-text">确保光线充足，避免阴影遮挡</text>
+        </view>
+        <view class="tip-item">
+          <image class="tip-icon" src="/images/tip-focus.png"></image>
+          <text class="tip-text">对准目标物体，保持画面清晰</text>
+        </view>
+        <view class="tip-item">
+          <image class="tip-icon" src="/images/tip-angle.png"></image>
+          <text class="tip-text">选择合适角度，突出环保行为特征</text>
+        </view>
+        <view class="tip-item">
+          <image class="tip-icon" src="/images/tip-background.png"></image>
+          <text class="tip-text">背景简洁，减少干扰元素</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

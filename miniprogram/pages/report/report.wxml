@@ -1,0 +1,164 @@
+<!--pages/report/report.wxml-->
+<view class="report-container">
+  <!-- 报告头部 -->
+  <view class="report-header">
+    <view class="header-content">
+      <text class="report-title">环保报告</text>
+      <text class="report-period">{{reportPeriod}}</text>
+    </view>
+    <view class="period-selector" bindtap="showPeriodPicker">
+      <text class="selector-text">选择时间</text>
+      <image class="selector-icon" src="/images/calendar.png"></image>
+    </view>
+  </view>
+
+  <!-- 总览卡片 -->
+  <view class="summary-card">
+    <view class="summary-item">
+      <text class="summary-value">{{summary.totalActions}}</text>
+      <text class="summary-label">环保行为</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-value">{{summary.totalScore}}</text>
+      <text class="summary-label">获得积分</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-value">{{summary.avgScore}}</text>
+      <text class="summary-label">平均积分</text>
+    </view>
+  </view>
+
+  <!-- 行为类型统计 -->
+  <view class="chart-section">
+    <view class="section-header">
+      <text class="section-title">行为类型分布</text>
+    </view>
+    <eco-chart 
+      data="{{typeChartData}}" 
+      type="pie" 
+      width="{{chartWidth}}" 
+      height="200"
+      show-legend="{{true}}"
+    ></eco-chart>
+  </view>
+
+  <!-- 积分趋势 -->
+  <view class="chart-section">
+    <view class="section-header">
+      <text class="section-title">积分趋势</text>
+    </view>
+    <eco-chart 
+      data="{{scoreChartData}}" 
+      type="line" 
+      width="{{chartWidth}}" 
+      height="200"
+      show-legend="{{false}}"
+    ></eco-chart>
+  </view>
+
+  <!-- 详细统计 -->
+  <view class="stats-section">
+    <view class="section-header">
+      <text class="section-title">详细统计</text>
+    </view>
+    <view class="stats-list">
+      <view class="stats-item" wx:for="{{typeStats}}" wx:key="type">
+        <view class="stats-icon">
+          <image src="/images/eco-{{item.type}}.png"></image>
+        </view>
+        <view class="stats-info">
+          <text class="stats-name">{{item.typeName}}</text>
+          <text class="stats-desc">{{item.count}}次 · {{item.percentage}}%</text>
+        </view>
+        <text class="stats-score">{{item.score}}积分</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近活动 -->
+  <view class="recent-section">
+    <view class="section-header">
+      <text class="section-title">最近活动</text>
+      <text class="section-more" bindtap="goToHistory">查看全部</text>
+    </view>
+    <view class="recent-list">
+      <view class="recent-item" wx:for="{{recentActions}}" wx:key="id">
+        <image class="recent-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+        <view class="recent-info">
+          <text class="recent-name">{{item.name}}</text>
+          <text class="recent-time">{{item.timeText}}</text>
+        </view>
+        <text class="recent-score">+{{item.score}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 环保建议 -->
+  <view class="suggestions-section">
+    <view class="section-header">
+      <text class="section-title">环保建议</text>
+    </view>
+    <view class="suggestions-list">
+      <view class="suggestion-item" wx:for="{{suggestions}}" wx:key="id">
+        <view class="suggestion-icon">
+          <image src="{{item.icon}}"></image>
+        </view>
+        <view class="suggestion-content">
+          <text class="suggestion-title">{{item.title}}</text>
+          <text class="suggestion-desc">{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分享按钮 -->
+  <view class="share-section">
+    <button class="share-btn" bindtap="shareReport">
+      <image class="share-icon" src="/images/share.png"></image>
+      <text>分享我的环保报告</text>
+    </button>
+  </view>
+
+  <!-- 时间选择器 -->
+  <view class="period-picker" wx:if="{{showPicker}}" bindtap="hidePeriodPicker">
+    <view class="picker-content" catchtap="stopPropagation">
+      <view class="picker-header">
+        <text class="picker-title">选择时间范围</text>
+        <text class="picker-close" bindtap="hidePeriodPicker">×</text>
+      </view>
+      <view class="picker-options">
+        <view 
+          class="picker-option {{selectedPeriod === 'week' ? 'active' : ''}}"
+          bindtap="selectPeriod"
+          data-period="week"
+        >
+          最近一周
+        </view>
+        <view 
+          class="picker-option {{selectedPeriod === 'month' ? 'active' : ''}}"
+          bindtap="selectPeriod"
+          data-period="month"
+        >
+          最近一月
+        </view>
+        <view 
+          class="picker-option {{selectedPeriod === 'quarter' ? 'active' : ''}}"
+          bindtap="selectPeriod"
+          data-period="quarter"
+        >
+          最近三月
+        </view>
+        <view 
+          class="picker-option {{selectedPeriod === 'year' ? 'active' : ''}}"
+          bindtap="selectPeriod"
+          data-period="year"
+        >
+          最近一年
+        </view>
+      </view>
+      <view class="picker-actions">
+        <button class="picker-btn confirm" bindtap="confirmPeriod">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

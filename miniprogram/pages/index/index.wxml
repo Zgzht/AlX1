@@ -1,0 +1,96 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card card fade-in">
+    <view class="user-info flex">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="user-details flex-1 ml-16">
+        <view class="username text-bold">{{userInfo.nickName || '环保用户'}}</view>
+        <view class="user-level text-secondary">{{levelName}} · Lv.{{userLevel}}</view>
+        <view class="score-info flex mt-16">
+          <view class="score-item">
+            <text class="score-number text-primary text-bold">{{userScore}}</text>
+            <text class="score-label text-muted">积分</text>
+          </view>
+          <view class="score-item ml-32">
+            <text class="score-number text-primary text-bold">{{todayActions}}</text>
+            <text class="score-label text-muted">今日行为</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 进度条 -->
+    <view class="level-progress mt-32">
+      <view class="progress-info flex-between mb-16">
+        <text class="text-muted">距离下一级还需 {{nextLevelScore - userScore}} 积分</text>
+        <text class="text-muted">{{Math.floor(levelProgress * 100)}}%</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{levelProgress * 100}}%"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快速操作 -->
+  <view class="quick-actions card fade-in">
+    <view class="section-title text-bold mb-32">快速操作</view>
+    <view class="actions-grid">
+      <view class="action-item" bindtap="goToCamera">
+        <image class="action-icon" src="/images/camera-large.png"></image>
+        <text class="action-text">拍照识别</text>
+      </view>
+      <view class="action-item" bindtap="goToTasks">
+        <image class="action-icon" src="/images/task-large.png"></image>
+        <text class="action-text">每日任务</text>
+        <view class="badge" wx:if="{{uncompletedTasks > 0}}">{{uncompletedTasks}}</view>
+      </view>
+      <view class="action-item" bindtap="goToRanking">
+        <image class="action-icon" src="/images/ranking-large.png"></image>
+        <text class="action-text">排行榜</text>
+      </view>
+      <view class="action-item" bindtap="goToReport">
+        <image class="action-icon" src="/images/report-large.png"></image>
+        <text class="action-text">环保报告</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日环保行为 -->
+  <view class="today-actions card fade-in" wx:if="{{todayActionsList.length > 0}}">
+    <view class="section-title text-bold mb-32">今日环保行为</view>
+    <view class="actions-list">
+      <view class="action-record" wx:for="{{todayActionsList}}" wx:key="id">
+        <view class="action-info flex">
+          <image class="action-type-icon" src="/images/eco-{{item.type}}.png"></image>
+          <view class="action-details flex-1 ml-16">
+            <view class="action-name text-bold">{{item.name}}</view>
+            <view class="action-time text-muted">{{item.time}}</view>
+          </view>
+          <view class="action-score text-primary text-bold">+{{item.score}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="view-more text-center mt-32" bindtap="goToProfile">
+      <text class="text-primary">查看更多 ></text>
+    </view>
+  </view>
+
+  <!-- 环保提示 -->
+  <view class="eco-tips card fade-in">
+    <view class="section-title text-bold mb-32">环保小贴士</view>
+    <view class="tip-content">
+      <image class="tip-icon" src="/images/tip.png"></image>
+      <text class="tip-text">{{currentTip}}</text>
+    </view>
+  </view>
+
+  <!-- 统计图表 -->
+  <view class="stats-chart card fade-in">
+    <view class="section-title text-bold mb-32">本周环保统计</view>
+    <eco-chart data="{{weeklyStats}}" type="bar"></eco-chart>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-space"></view>
+</view>
